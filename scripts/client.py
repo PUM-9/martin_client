@@ -3,16 +3,17 @@
 import rospy
 from martin_client.msg import Message
 
+def callback(data):
+    print(data.sender)
+    print(data.message)
+
 if __name__ == "__main__":
-    pub = rospy.Publisher('chat_in', Message, queue_size=10)
     rospy.init_node('martin_client', anonymous=False)
-    rate = rospy.Rate(1)
-    msg = Message()
-    msg.sender = "martin"
-    msg.message = "hej"
+    pub = rospy.Publisher('chat_in', Message, queue_size=10)
+    sub = rospy.Subscriber('chat_out', Message, callback)
+    send_msg = Message()
+    send_msg.sender = "martin"
 
     while not rospy.is_shutdown():
-        pub.publish(msg)
-        print("Published msg")
-        rate.sleep()
-    
+        input = str(input("Enter msg: "))
+        pub.publish(send_msg)
