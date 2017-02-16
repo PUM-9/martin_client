@@ -3,6 +3,7 @@
 import rospy
 from martin_client.msg import Message
 
+
 def callback(data):
     print(data.sender)
     print(data.message)
